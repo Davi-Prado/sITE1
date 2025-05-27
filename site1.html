@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acesso com Senha</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif; /* Usando uma fonte mais parecida com a de livros */
+            margin: 0;
+            height: 100vh;
+            background-color: #000; /* Fundo preto */
+            color: white; /* Cor do texto */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.7); /* Fundo semitransparente preto */
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            z-index: 1;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 30px;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .nickname-label, .senha-label {
+            font-size: 20px;
+            color: white;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="password"] {
+            padding: 15px;
+            width: 80%;
+            margin-bottom: 20px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            background-color: transparent; /* Caixa de texto sem fundo */
+            color: white;
+            font-size: 18px;
+            transition: border-color 0.3s, box-shadow 0.3s ease; /* Transições para borda e sombra */
+        }
+
+        /* Imagem para o campo de Nickname */
+        input[type="text"] {
+            background-image: url('https://www.exemplo.com/imagem-nickname.jpg'); /* Substitua pela URL da imagem para o nickname */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Imagem para o campo de Senha */
+        input[type="password"] {
+            background-image: url('https://www.exemplo.com/imagem-senha.jpg'); /* Substitua pela URL da imagem para a senha */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            font-weight: bold;
+        }
+
+        button {
+            padding: 15px;
+            width: 80%;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Estilo da imagem de fundo da área de texto */
+        .image-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://www.exemplo.com/imagem-texto.jpg'); /* Substitua pela URL da imagem para a área do texto */
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+
+        /* Estilo para a mensagem */
+        .message {
+            font-size: 22px;
+            font-weight: bold;
+            color: orange;
+            text-transform: uppercase;
+            line-height: 1.6;
+            white-space: pre-line;
+            letter-spacing: 1px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Imagem de fundo da página de login -->
+<div class="image-container"></div>
+
+<!-- Conteúdo da tela de login -->
+<div id="login-container" class="container">
+    <h2>Susan está esperando seu Nickname</h2>
+    <label class="nickname-label">Digite seu Nickname:</label>
+    <input type="text" id="nickname" placeholder="Digite seu Nickname" />
+    <button onclick="perguntarSenha()">Avançar</button>
+</div>
+
+<!-- Tela de senha -->
+<div id="senha-container" class="hidden container">
+    <h2>Digite a senha para acessar</h2>
+    <label class="senha-label">Senha:</label>
+    <input type="password" id="senha" placeholder="Senha" />
+    <button onclick="verificarSenha()">Verificar</button>
+</div>
+
+<!-- Mensagem com o fundo de sinal de rádio -->
+<div id="mensagem" class="hidden message"></div>
+
+<!-- Som de fundo estilo rádio -->
+<audio id="radio-audio" autoplay loop>
+    <source src="https://www.exemplo.com/radio_sound.mp3" type="audio/mp3">
+    Seu navegador não suporta áudio.
+</audio>
+
+<script>
+    function perguntarSenha() {
+        const nickname = document.getElementById("nickname").value;
+        
+        if (nickname.trim() === "") {
+            alert("Por favor, insira seu Nickname.");
+        } else {
+            // Esconde a tela do Nickname
+            document.getElementById("login-container").classList.add("hidden");
+
+            // Exibe a tela da senha
+            document.getElementById("senha-container").classList.remove("hidden");
+        }
+    }
+
+    function verificarSenha() {
+        const senhaInserida = document.getElementById("senha").value;
+        const senhaCorreta = "137"; // Senha correta
+
+        if (senhaInserida === senhaCorreta) {
+            // Esconde a área de login
+            document.getElementById("senha-container").classList.add("hidden");
+
+            // Exibe a mensagem com o fundo de sinal de rádio
+            const mensagemElement = document.getElementById("mensagem");
+            mensagemElement.classList.remove("hidden");
+
+            // Mensagem exibida
+            mensagemElement.innerHTML = `
+                Apesar do silêncio no outro lado da transmissão, CYG NÃO DESISTIU DE SEUS OBJETIVOS.\n
+                ESSA É A SEGUNDA TENTATIVA DE COMUNICAÇÃO COM ZULLERS, ERZU E LAZU.\n
+                NOSSOS PLANOS SE DESENVOLVEM À MEDIDA QUE O TEMPO PASSA, E NOVOS ACONTECIMENTOS\n
+                ASSOMBRAM A ILHA. SUAS MENTES BRILHANTES SERIAM UMA ÓTIMA ADIÇÃO A EQUIPE DA CYBERGENESIS,\n
+                E ESPERAMOS ANSIOSAMENTE PARA QUE SE JUNtem A NÓS. MUZU E NOVAS INÉDITAS DESCOBERTAS NOS AGUARDAM!\n
+                CYG ESTÁ DO SEU LADO.
+            `;
+        } else {
+            alert("Senha incorreta. Tente novamente.");
+        }
+    }
+</script>
+
+</body>
+</html>
